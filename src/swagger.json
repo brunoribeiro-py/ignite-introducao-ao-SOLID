@@ -1,0 +1,148 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ignite-introdução-ao-solid API",
+    "description": "Chapter 2 challenge from the Rocketseat's Ignite Bootcamp.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "bribeiro21@icloud.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create a user",
+        "description": "If the user was not already created, creates a new one.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email"
+                ],
+                "example": {
+                  "name": "Bruno",
+                  "email": "bribeiro21@icloud.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfuly created! Returns a user object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "admin": false,
+                    "id": "a3679e84-0c78-42f2-8a95-2a1696f18b4f",
+                    "name": "Bruno Ribeiro",
+                    "email": "bribeiro21@icloud.com",
+                    "created_at": "2021-03-19T14:24:43.960Z",
+                    "updated_at": "2021-03-19T14:24:43.960Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User already exists!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "User already exists!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Lists all users.",
+        "description": "List all the previously created users.",
+        "response": {
+          "200": {
+            "description": "Success!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Lists user profile by ID.",
+        "description": "List the user profile information."
+      },
+      "components": {
+        "parameters": {
+          "name": "user_id",
+          "in": "path",
+          "description": "user_id to search for",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Turns a user into an admin.",
+        "description": "Provided an user ID, turns it into an admin."
+      },
+      "parameters": {
+        "name": "user_id",
+        "in": "path",
+        "description": "user_id to search for",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
